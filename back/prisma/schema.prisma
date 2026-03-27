@@ -1,0 +1,79 @@
+
+model User {
+  id        Int     @id @default(autoincrement())
+  name      String
+  email     String  @unique
+  password  String
+  createdAt DateTime @default(now())
+  workouts Workout[]
+  routines Routine[]
+}
+
+model Routine {
+  id        Int     @id @default(autoincrement())
+    name      String
+      exercises RoutineExercise[]
+
+      userId Int
+      user User @relation(fields: [userId], references: [id])
+}
+
+model RoutineExercise {
+  id Int @id @default(autoincrement())
+
+  sets Int
+  order Int
+  restTime Int?
+
+  routineId Int
+  exerciseId Int
+
+  routine Routine @relation(fields: [routineId], references: [id])
+  exercise Exercise @relation(fields: [exerciseId], references: [id])
+}
+
+model Workout {
+id        Int     @id @default(autoincrement())
+  name      String
+  workout_exercises WorkoutExercise[]
+
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+  
+  createdAt DateTime @default(now())
+}
+
+model Exercise {
+  id   Int    @id @default(autoincrement())
+  name String @unique
+
+    workout_exercises WorkoutExercise[]
+  routine_exercises RoutineExercise[]
+}
+
+model WorkoutExercise {
+  id        Int     @id @default(autoincrement())
+    weight Float
+    reps Float
+    order Int
+    rir Int?
+    failed Boolean @default(false)
+    restTime Int?
+
+    exerciseId Int
+    exercise Exercise @relation(fields: [exerciseId], references: [id])
+
+    workoutId Int
+    workout Workout @relation(fields: [workoutId], references: [id])
+
+    createdAt DateTime @default(now())
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
