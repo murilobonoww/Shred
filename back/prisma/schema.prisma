@@ -34,7 +34,7 @@ model RoutineExercise {
 
 model Workout {
 id        Int     @id @default(autoincrement())
-  name      String
+  name      String @default("Treinamento")
   workout_exercises WorkoutExercise[]
 
   userId Int

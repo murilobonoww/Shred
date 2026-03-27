@@ -4,6 +4,21 @@ const router = Router();
 
 const prisma = new PrismaClient()
 
+router.post('/new-workout/:userID', async (req, res) => {
+    const { userID } = req.params
+
+    try {
+        await prisma.workout.create({ data: {userId: parseInt(userID)} })
+        res.status(200).send({ msg: 'Workout created!' })
+    } catch (error) {
+        res.status(500).send({ error: 'Something went wrong :(', details: error.message })
+    }
+})
+
+
+// CRUD:
+/////////////////////////////////////////////////////////////////////////////////////////////
+
 router.get('/', async (req, res) => {
     const users = await prisma.user.findMany()
     res.status(200).send(users);
@@ -61,5 +76,7 @@ router.delete('/:id', async (req, res) => {
         res.status(500).send({ error: 'Something went wrong', details: error.message })
     }
 })
+
+/////////////////////////////////////////////////////////////////////////////////////////////
 
 module.exports = router;
