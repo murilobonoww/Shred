@@ -4,6 +4,17 @@ const router = Router();
 
 const prisma = new PrismaClient()
 
+router.get('/workouts/:userID', async (req, res) => {
+    const { userID } = req.params
+
+    try {
+        const user_workouts = await prisma.workout.findMany({ where: {userId: parseInt(userID)} })
+        res.status(200).send(user_workouts)
+    } catch (error) {
+        res.status(500).send({ error: 'Something went wrong :(', details: error.message })
+    }
+})
+
 router.post('/new-workout/:userID', async (req, res) => {
     const { userID } = req.params
 
