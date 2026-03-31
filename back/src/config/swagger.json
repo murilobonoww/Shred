@@ -1,0 +1,55 @@
+  {
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Shred api",
+      "version": "1.0.0"
+    },
+    "servers": [
+      { "url": "http://localhost:8000" }
+    ],
+    "paths": {
+      "/users": {
+        "get": { "summary": "Lista todos os usuários", "tags": ["Usuários"] },
+        "post": { "summary": "Cria usuário", "tags": ["Usuários"] }
+      },
+      "/users/{id}": {
+        "get": { "summary": "Pega usuário específico", "tags": ["Usuários"] },
+        "put": { "summary": "Atualiza usuário", "tags": ["Usuários"] },
+        "delete": { "summary": "Deleta usuário", "tags": ["Usuários"] }
+      },
+
+
+
+      "/exercises": {
+        "get": { "summary": "Lista todos os modelos de exercícios", "tags": ["Exercício (modelo)"] },
+        "post": { "summary": "Cria modelo de exercício", "tags": ["Exercício (modelo)"] }
+      },
+
+
+
+      "/workouts?userId={id}": {
+        "get": { "summary": "Lista treinos do usuário", "tags": ["Treino"] },
+        "post": { "summary": "Cria treino", "tags": ["Treino"] }
+      },
+      "/workouts/rename/{id}": {
+        "put": { "summary": "Renomeia treino", "tags": ["Treino"] }
+      },
+
+
+
+      "/workoutExercises": {
+        "post": { "summary": "Adiciona exercício ao treino", "tags": ["Exercício do treino"] }
+      },
+      "/workoutExercises/{id}": {
+        "delete": { "summary": "Remove exercício do treino", "tags": ["Exercício do treino"] }
+      },
+      "/workoutExercises/{id}/sets": {
+        "post": { "summary": "Adiciona série ao exercício", "tags": ["Série do exercício do treino"] }
+      },
+
+
+      "/workoutExerciseSets/{id}": {
+        "delete": { "summary": "Deleta série do exercício", "tags": ["Série do exercício do treino"] }
+      }
+    }
+  }

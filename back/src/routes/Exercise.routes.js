@@ -2,7 +2,7 @@ const { PrismaClient } = require('@prisma/client');
 const { Router } = require('express')
 const router = Router()
 
-router.get('/getAll', async (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const exercises = await prisma.exercise.findMany()
         res.status(200).send(exercises)
