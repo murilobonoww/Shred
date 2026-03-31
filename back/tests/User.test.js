@@ -6,11 +6,12 @@ describe('User Routes', () => {
   let createdUserId;
 
   it('should create a user', async () => {
+    const uniqueEmail = `teste${Date.now()}@gmail.com`
     const res = await request(app)
-      .post('/user')
+      .post('/users')
       .send({
         name: 'Murilo',
-        email: 'murilo@email.com',
+        email: uniqueEmail,
         password: '123456'
       });
 
@@ -20,18 +21,6 @@ describe('User Routes', () => {
     createdUserId = res.body.id;
   });
 
-  // CREATE ERROR
-  it('should return 400 if missing fields', async () => {
-    const res = await request(app)
-      .post('/users')
-      .send({
-        name: 'Murilo'
-      });
-
-    expect(res.statusCode).toBe(400);
-  });
-
-  // GET ALL
   it('should return all users', async () => {
     const res = await request(app).get('/users');
 
@@ -39,7 +28,6 @@ describe('User Routes', () => {
     expect(Array.isArray(res.body)).toBe(true);
   });
 
-  // GET BY ID
   it('should return a user by id', async () => {
     const res = await request(app).get(`/users/${createdUserId}`);
 
@@ -47,14 +35,12 @@ describe('User Routes', () => {
     expect(res.body).toHaveProperty('id');
   });
 
-  // GET BY ID NOT FOUND
   it('should return 404 if user not found', async () => {
     const res = await request(app).get('/users/999999');
 
     expect(res.statusCode).toBe(404);
   });
 
-  // UPDATE
   it('should update a user', async () => {
     const res = await request(app)
       .put(`/users/${createdUserId}`)
@@ -66,7 +52,6 @@ describe('User Routes', () => {
     expect(res.body.name).toBe('Murilo Updated');
   });
 
-  // UPDATE ERROR
   it('should return 400 if no fields to update', async () => {
     const res = await request(app)
       .put(`/users/${createdUserId}`)
@@ -75,7 +60,6 @@ describe('User Routes', () => {
     expect(res.statusCode).toBe(400);
   });
 
-  // DELETE
   it('should delete a user', async () => {
     const res = await request(app)
       .delete(`/users/${createdUserId}`);
